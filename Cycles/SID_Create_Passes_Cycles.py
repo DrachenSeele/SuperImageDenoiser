@@ -26,6 +26,8 @@ def create_cycles_passes(
     ##Enable Passes##
     # Denoising Normal, Denoising Albedo, Depth
     view_layer.cycles.denoising_store_passes = True
+    # Z Depth
+    view_layer.use_pass_z = True  # Enable Z depth pass
     # Diffuse
     view_layer.use_pass_diffuse_direct = True
     view_layer.use_pass_diffuse_indirect = True
@@ -133,7 +135,7 @@ def create_cycles_passes(
         ntree.links.new(render_layer_node.outputs["Vector"],output_file_node.inputs["Vector"])
         # Depth
         output_file_node.file_slots.new("Depth")
-        ntree.links.new(render_layer_node.outputs["Denoising Depth"],output_file_node.inputs["Depth"])
+        ntree.links.new(render_layer_node.outputs["Depth"],output_file_node.inputs["Depth"])  # Connect Z depth pass
         # Temporal Albedo
         output_file_node.file_slots.new("Temporal Albedo")
         ntree.links.new(sid_node.outputs["Temporal Albedo"],output_file_node.inputs["Temporal Albedo"])
